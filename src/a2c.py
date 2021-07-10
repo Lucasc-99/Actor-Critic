@@ -21,29 +21,31 @@ class A2C(nn.Module):
         :param env: target gym environment
         :param t_max: max time step for single episode
         """
+        super(A2C, self).__init__()
+
         self.env = env
         self.t_max = t_max
         self.gamma = gamma
         self.in_size = len(env.observation_space.sample().flatten())
-        self.out_size = env.action_space.n
+        self.out_size = self.env.action_space.n
 
         self.actor = nn.Sequential(
             nn.Linear(self.in_size, 8),
             nn.ReLU(),
             nn.Linear(8, 8),
             nn.Linear(8, self.out_size)
-        )
+        ).double()
 
         self.critic = nn.Sequential(
             nn.Linear(self.in_size, 8),
             nn.ReLU(),
             nn.Linear(8, 1)
-        )
+        ).double()
 
-    def run_episode(self):
+    def train_episode(self):
         """
         Runs one episode and collects critic values, expected return,
-        :return: A pytorch tensor stacked with reward, critic eval, and action information
+        :return: A tensor with total/expected reward, critic eval, and action information
         """
         rewards = []
         critic_vals = []
@@ -51,28 +53,30 @@ class A2C(nn.Module):
 
         # Run episode and save information
 
-        observation, reward = self.env.reset()
+        observation = self.env.reset()
         for _ in range(self.t_max):
             # self.env.render()
 
-            action_logits = torch.softmax(self.actor(observation))
+            # Get action from actor
+            action_logits = torch.softmax(self.actor(torch.tensor(observation).double()), -1)
             action = Categorical(action_logits).sample()
 
-            predicted_val = self.critic(observation)
+            # Get value from critic
+            predicted_val = self.critic(torch.tensor(observation).double())
 
-            rewards.append(reward)
             critic_vals.append(predicted_val)
             actions.append(action)
 
-            observation, reward, done, info = self.env.step(action)
+            # Send action to environment and get rewards, next state
+            observation, reward, done, info = self.env.step(action.item())
+
+            rewards.append(reward)
 
             if done:
                 break
 
-        # Convert observed rewards to expected
-        running_sum = 0
-        #for i in range(len(rewards)):
-         #   rewards +=
+        total_reward = sum(rewards)
 
+        # TODO: Convert observed rewards to expected
 
-        #return torch.stack()
+        return rewards, critic_vals, actions, total_reward

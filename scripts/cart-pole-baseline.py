@@ -22,13 +22,9 @@ for i_episode in range(1000):
 
         env.render()
 
-        print(observation)
-
         action = env.action_space.sample()  # Get a random action (left or right)
 
         observation, reward, done, info = env.step(action)  # Get next step of the game
-
-        print(info)
 
         if done:
             t_steps.append(t + 1)
