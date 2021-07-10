@@ -10,6 +10,9 @@ from src.a2c import A2C
 
 agent = A2C(gym.make('CartPole-v0'))
 
-agent.train_episode()
+for episode in range(1000):
+    rewards, critic_vals, actions, total_reward = agent.train_episode()
 
-# loss and backprop
+    # loss and backprop
+
+    # Implement some terminal condition
