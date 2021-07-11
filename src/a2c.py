@@ -77,6 +77,11 @@ class A2C(nn.Module):
 
         total_reward = sum(rewards)
 
-        # TODO: Convert observed rewards to expected
+        # G_t = summation (from t_i = t to T) of (gamma^(t_i-t)* r_t_i)
+
+        # TODO: make this differentiable
+        for t_i in range(len(rewards)):
+            for t in range(0, t_i):
+                rewards[t_i] += rewards[t]*(self.gamma**(t_i - t))
 
         return rewards, critic_vals, actions, total_reward
