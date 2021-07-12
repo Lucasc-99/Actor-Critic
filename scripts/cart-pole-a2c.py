@@ -14,8 +14,8 @@ from tqdm import tqdm
 
 agent = A2C(gym.make('CartPole-v0'))
 
-actor_optim = optim.SGD(agent.get_actor_params(), lr=.01)
-critic_optim = optim.SGD(agent.get_critic_params(), lr=.01)
+actor_optim = optim.Adam(agent.get_actor_params(), lr=.001)
+critic_optim = optim.Adam(agent.get_critic_params(), lr=.001)
 
 r = []
 avg_r = 0

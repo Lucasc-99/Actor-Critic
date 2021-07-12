@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
 from torch.distributions import Categorical
-import numpy as np
-
 '''
 Run the agent on the environment to collect training data per episode.
 Compute expected return at each time step.
@@ -30,15 +28,18 @@ class A2C(nn.Module):
         self.in_size = len(env.observation_space.sample().flatten())
         self.out_size = self.env.action_space.n
 
-
         self.actor = nn.Sequential(
             nn.Linear(self.in_size, 8),
+            nn.ReLU(),
+            nn.Linear(8,8),
             nn.ReLU(),
             nn.Linear(8, self.out_size)
         ).double()
 
         self.critic = nn.Sequential(
             nn.Linear(self.in_size, 8),
+            nn.ReLU(),
+            nn.Linear(8,8),
             nn.ReLU(),
             nn.Linear(8, 1)
         ).double()
