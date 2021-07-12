@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.distributions import Categorical
+import numpy as np
 
 '''
 Run the agent on the environment to collect training data per episode.
@@ -42,14 +43,14 @@ class A2C(nn.Module):
             nn.Linear(8, 1)
         ).double()
 
-    def train_episode(self):
+    def run_env_episode(self):
         """
         Runs one episode and collects critic values, expected return,
         :return: A tensor with total/expected reward, critic eval, and action information
         """
         rewards = []
         critic_vals = []
-        actions = []
+        action_p_vals = []
 
         # Run episode and save information
 
@@ -58,30 +59,77 @@ class A2C(nn.Module):
             # self.env.render()
 
             # Get action from actor
-            action_logits = torch.softmax(self.actor(torch.tensor(observation).double()), -1)
+            action_logits = torch.softmax(self.actor(torch.tensor(observation)).double(), -1)
             action = Categorical(action_logits).sample()
+            # Get action probability
+            action_prob = action_logits[action]
 
             # Get value from critic
-            predicted_val = self.critic(torch.tensor(observation).double())
+            pred = torch.squeeze(self.critic(torch.tensor(observation).double()).view(-1)).double()
 
-            critic_vals.append(predicted_val)
-            actions.append(action)
+            # Write prediction and action/probabilities to arrays
+            action_p_vals.append(action_prob)
+            critic_vals.append(pred)
 
             # Send action to environment and get rewards, next state
-            observation, reward, done, info = self.env.step(action.item())
 
-            rewards.append(reward)
+            observation, reward, done, info = self.env.step(action.item())
+            rewards.append(torch.tensor(reward))
 
             if done:
                 break
 
         total_reward = sum(rewards)
 
-        # G_t = summation (from t_i = t to T) of (gamma^(t_i-t)* r_t_i)
+        # Convert reward array to expected return
 
-        # TODO: make this differentiable
         for t_i in range(len(rewards)):
-            for t in range(0, t_i):
-                rewards[t_i] += rewards[t]*(self.gamma**(t_i - t))
+            for t in range(t_i + 1, len(rewards)):
+                rewards[t_i] += rewards[t] * (self.gamma ** (t_i - t))
 
-        return rewards, critic_vals, actions, total_reward
+        # Convert output arrays to tensors using torch.stack
+
+        def f(inp):
+            return torch.stack(tuple(inp), 0)
+        return f(rewards), f(critic_vals), f(action_p_vals), total_reward
+
+    def zero_grad(self, set_to_none: bool = False):
+        """
+        Wrapper method for nn.Module.zero_grad(),
+        Zeroes the gradients of the actor and critic networks
+        :param set_to_none: set grads to none
+        :return: None
+        """
+        self.actor.zero_grad(set_to_none)
+        self.critic.zero_grad(set_to_none)
+
+    def get_actor_params(self):
+        """
+        Wrapper method for actor params
+        :return: Actor network parameters
+        """
+        return self.actor.parameters()
+
+    def get_critic_params(self):
+        """
+        Wrapper method for critic params
+        :return: Actor network parameters
+        """
+        return self.critic.parameters()
+
+    @staticmethod
+    def compute_loss(action_p_vals, G, V, loss=nn.MSELoss()):
+        """
+        Actor Advantage Loss, where advantage = G - V
+        Critic Loss, using mean squared error
+        :param action_p_vals: Action Probabilities
+        :param G: Expected Returns
+        :param V: Predicted Values
+        :return: Actor loss tensor, Critic loss tensor
+        """
+        print(V)
+        assert len(action_p_vals) == len(G) == len(V)
+
+        a = -(torch.sum(torch.log(action_p_vals * (G - V))))
+        b = loss(G, V)
+        return a,b
