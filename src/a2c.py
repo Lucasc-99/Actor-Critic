@@ -1,14 +1,6 @@
 import torch
 import torch.nn as nn
 from torch.distributions import Categorical
-'''
-Run the agent on the environment to collect training data per episode.
-Compute expected return at each time step.
-Compute the loss for the actor and critic models.
-Compute gradients and update network parameters.
-Repeat 1-4 until either success criterion or max episodes has been reached.
-'''
-
 
 class A2C(nn.Module):
 
