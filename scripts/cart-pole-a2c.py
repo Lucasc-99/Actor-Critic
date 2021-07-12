@@ -11,18 +11,20 @@ import torch.optim as optim
 from tqdm import tqdm
 
 
+LR = .001
+
 
 agent = A2C(gym.make('CartPole-v0'))
 
-actor_optim = optim.Adam(agent.get_actor_params(), lr=.001)
-critic_optim = optim.Adam(agent.get_critic_params(), lr=.001)
+actor_optim = optim.Adam(agent.get_actor_params(), lr=LR)
+critic_optim = optim.Adam(agent.get_critic_params(), lr=LR)
+
 
 r = []
 avg_r = 0
-solved_cond = False
 i = 0
 
-while not solved_cond and i < 10000:
+for i in range(10000):
     critic_optim.zero_grad()
     actor_optim.zero_grad()
 
@@ -40,5 +42,6 @@ while not solved_cond and i < 10000:
     if len(r) % 100 == 0 and len(r) != 0:  # check average every 100 episodes
         avg_r = sum(r[len(r)-100:])/len(r[len(r)-100:])
         print(avg_r)
-    i += 1
-print(f"Done with average reward {avg_r} in final 100 episodes")
+        if avg_r > 170:
+            print(f"Solved CartPole-v0 with average reward {avg_r} in final 100 episodes")
+            break

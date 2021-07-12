@@ -23,7 +23,7 @@ class A2C(nn.Module):
         self.actor = nn.Sequential(
             nn.Linear(self.in_size, 8),
             nn.ReLU(),
-            nn.Linear(8,8),
+            nn.Linear(8, 8),
             nn.ReLU(),
             nn.Linear(8, self.out_size)
         ).double()
@@ -31,7 +31,7 @@ class A2C(nn.Module):
         self.critic = nn.Sequential(
             nn.Linear(self.in_size, 8),
             nn.ReLU(),
-            nn.Linear(8,8),
+            nn.Linear(8, 8),
             nn.ReLU(),
             nn.Linear(8, 1)
         ).double()
@@ -123,4 +123,4 @@ class A2C(nn.Module):
         :return: Actor loss tensor, Critic loss tensor
         """
         assert len(action_p_vals) == len(G) == len(V)
-        return -(torch.sum(torch.log(action_p_vals * (G - V)))), loss(G, V)
+        return -(torch.sum(torch.log(action_p_vals) * (G - V))), loss(G, V)
