@@ -30,10 +30,10 @@ class A2C(nn.Module):
         self.in_size = len(env.observation_space.sample().flatten())
         self.out_size = self.env.action_space.n
 
+
         self.actor = nn.Sequential(
             nn.Linear(self.in_size, 8),
             nn.ReLU(),
-            nn.Linear(8, 8),
             nn.Linear(8, self.out_size)
         ).double()
 
@@ -63,6 +63,7 @@ class A2C(nn.Module):
             # Get action from actor
             action_logits = torch.softmax(self.actor(observation), -1)
             action = Categorical(action_logits).sample()
+
             # Get action probability
             action_prob = action_logits[action]
 
@@ -91,7 +92,6 @@ class A2C(nn.Module):
         # Convert output arrays to tensors using torch.stack
         def f(inp):
             return torch.stack(tuple(inp), 0)
-
         return f(rewards), f(critic_vals), f(action_p_vals), total_reward
 
     def zero_grad(self, set_to_none: bool = False):
@@ -119,7 +119,7 @@ class A2C(nn.Module):
         return self.critic.parameters()
 
     @staticmethod
-    def compute_loss(action_p_vals, G, V, loss=nn.MSELoss()):
+    def compute_loss(action_p_vals, G, V, loss=nn.SmoothL1Loss()):
         """
         Actor Advantage Loss, where advantage = G - V
         Critic Loss, using mean squared error
