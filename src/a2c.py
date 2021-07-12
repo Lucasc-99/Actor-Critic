@@ -55,17 +55,19 @@ class A2C(nn.Module):
         # Run episode and save information
 
         observation = self.env.reset()
+
         for _ in range(self.t_max):
             # self.env.render()
+            observation = torch.from_numpy(observation).double()
 
             # Get action from actor
-            action_logits = torch.softmax(self.actor(torch.tensor(observation)).double(), -1)
+            action_logits = torch.softmax(self.actor(observation), -1)
             action = Categorical(action_logits).sample()
             # Get action probability
             action_prob = action_logits[action]
 
             # Get value from critic
-            pred = torch.squeeze(self.critic(torch.tensor(observation).double()).view(-1)).double()
+            pred = torch.squeeze(self.critic(observation).view(-1))
 
             # Write prediction and action/probabilities to arrays
             action_p_vals.append(action_prob)
@@ -74,7 +76,7 @@ class A2C(nn.Module):
             # Send action to environment and get rewards, next state
 
             observation, reward, done, info = self.env.step(action.item())
-            rewards.append(torch.tensor(reward))
+            rewards.append(torch.tensor(reward).double())
 
             if done:
                 break
@@ -82,15 +84,14 @@ class A2C(nn.Module):
         total_reward = sum(rewards)
 
         # Convert reward array to expected return
-
         for t_i in range(len(rewards)):
             for t in range(t_i + 1, len(rewards)):
                 rewards[t_i] += rewards[t] * (self.gamma ** (t_i - t))
 
         # Convert output arrays to tensors using torch.stack
-
         def f(inp):
             return torch.stack(tuple(inp), 0)
+
         return f(rewards), f(critic_vals), f(action_p_vals), total_reward
 
     def zero_grad(self, set_to_none: bool = False):
@@ -122,14 +123,11 @@ class A2C(nn.Module):
         """
         Actor Advantage Loss, where advantage = G - V
         Critic Loss, using mean squared error
+        :param loss: loss function for critic
         :param action_p_vals: Action Probabilities
         :param G: Expected Returns
         :param V: Predicted Values
         :return: Actor loss tensor, Critic loss tensor
         """
-        print(V)
         assert len(action_p_vals) == len(G) == len(V)
-
-        a = -(torch.sum(torch.log(action_p_vals * (G - V))))
-        b = loss(G, V)
-        return a,b
+        return -(torch.sum(torch.log(action_p_vals * (G - V)))), loss(G, V)

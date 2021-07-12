@@ -23,10 +23,11 @@ for episode in range(1000):
     rewards, critic_vals, action_p_vals, total_reward = agent.run_env_episode()
 
     max_reward = max(max_reward, total_reward)
+    print(total_reward.data)
 
     l_actor, l_critic = agent.compute_loss(action_p_vals=action_p_vals, G=rewards, V=critic_vals)
 
-    l_actor.backward()
+    l_actor.backward(retain_graph=True)
     l_critic.backward()
 
     actor_optim.step()
