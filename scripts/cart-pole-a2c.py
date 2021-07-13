@@ -11,7 +11,7 @@ import torch.optim as optim
 
 
 LR = .001  # Learning rate
-SEED = 4  # Random seed for reproducibility
+SEED = None  # Random seed for reproducibility
 MAX_EPISODES = 20000  # Max number of episodes
 
 # Init actor-critic agent
