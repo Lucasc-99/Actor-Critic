@@ -6,37 +6,29 @@ a2c: Agent uses Advantage Actor Critic algorithm
 
 """
 import gym
-import torch
 from src.a2c import A2C
 import torch.optim as optim
-from tqdm import tqdm
 
 
 LR = .001  # Learning rate
-SEED = 2  # Random seed for reproducibility
+SEED = None  # Random seed for reproducibility
+MAX_EPISODES = 10000  # Max number of episodes
 
-# Experiments:
-
-# 0 --> Diverges
-# 1 --> Solves after 1600 episodes
-# 2 --> Solves after 900 episdoes
-# 3 --> Diverges
-
-torch.manual_seed(SEED)
+# Init actor-critic agent
 agent = A2C(gym.make('CartPole-v0'), random_seed=SEED)
+
+# Init optimizers
+actor_optim = optim.Adam(agent.actor.parameters(), lr=LR)
+critic_optim = optim.Adam(agent.critic.parameters(), lr=LR)
 
 #
 # Train
 #
 
-r = []
-avg_r = 0
-i = 0
+r = []  # Array containing total rewards
+avg_r = 0  # Value storing average reward over last 100 episodes
 
-actor_optim = optim.Adam(agent.get_actor_params(), lr=LR)
-critic_optim = optim.Adam(agent.get_critic_params(), lr=LR)
-
-for i in range(10000):
+for i in range(MAX_EPISODES):
     critic_optim.zero_grad()
     actor_optim.zero_grad()
 
@@ -45,16 +37,19 @@ for i in range(10000):
 
     l_actor, l_critic = agent.compute_loss(action_p_vals=action_p_vals, G=rewards, V=critic_vals)
 
-    l_actor.backward(retain_graph=True)
+    l_actor.backward()
     l_critic.backward()
 
     actor_optim.step()
     critic_optim.step()
 
     # Check average reward every 100 episodes, print, and end script if solved
-    episode_count = i-(i%100)
     if len(r) % 100 == 0 and len(r) != 0:  # check average every 100 episodes
-        avg_r = sum(r[len(r)-100:])/len(r[len(r)-100:])
+
+        episode_count = i - (i % 100)
+        prev_episodes = r[len(r) - 100:]
+        avg_r = sum(prev_episodes) / len(prev_episodes)
+
         print(f'Average reward during episodes {episode_count}-{episode_count+100} is {avg_r.item()}')
         if avg_r > 195:
             print(f"Solved CartPole-v0 with average reward {avg_r.item()}")
