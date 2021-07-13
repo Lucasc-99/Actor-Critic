@@ -5,7 +5,7 @@ from torch.distributions import Categorical
 
 class A2C(nn.Module):
 
-    def __init__(self, env, gamma=.99, random_seed=None):
+    def __init__(self, env, hidden_size=128, gamma=.99, random_seed=None):
         """
         Assumes fixed continuous observation space
         and fixed discrete action space (for now)
@@ -22,23 +22,20 @@ class A2C(nn.Module):
 
         self.env = env
         self.gamma = gamma
+        self.hidden_size = hidden_size
         self.in_size = len(env.observation_space.sample().flatten())
         self.out_size = self.env.action_space.n
 
         self.actor = nn.Sequential(
-            nn.Linear(self.in_size, 8),
+            nn.Linear(self.in_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(8, 8),
-            nn.ReLU(),
-            nn.Linear(8, self.out_size)
+            nn.Linear(hidden_size, self.out_size)
         ).double()
 
         self.critic = nn.Sequential(
-            nn.Linear(self.in_size, 8),
+            nn.Linear(self.in_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(8, 8),
-            nn.ReLU(),
-            nn.Linear(8, 1)
+            nn.Linear(hidden_size, 1)
         ).double()
 
     def train_env_episode(self, render=False):
@@ -84,6 +81,7 @@ class A2C(nn.Module):
 
         # Convert reward array to expected return
         for t_i in range(len(rewards)):
+
             for t in range(t_i + 1, len(rewards)):
                 rewards[t_i] += rewards[t] * (self.gamma ** (t_i - t))
 
@@ -119,11 +117,11 @@ class A2C(nn.Module):
         return sum(rewards)
 
     @staticmethod
-    def compute_loss(action_p_vals, G, V, loss=nn.SmoothL1Loss()):
+    def compute_loss(action_p_vals, G, V, critic_loss=nn.SmoothL1Loss()):
         """
         Actor Advantage Loss, where advantage = G - V
         Critic Loss, using mean squared error
-        :param loss: loss function for critic   :Pytorch loss module
+        :param critic_loss: loss function for critic   :Pytorch loss module
         :param action_p_vals: Action Log Probabilities  :Tensor
         :param G: Actual Expected Returns   :Tensor
         :param V: Predicted Expected Returns    :Tensor
@@ -131,4 +129,4 @@ class A2C(nn.Module):
         """
         assert len(action_p_vals) == len(G) == len(V)
         advantage = G - V.detach()
-        return -(torch.sum(action_p_vals * advantage)), loss(G, V)
+        return -(torch.sum(action_p_vals * advantage)), critic_loss(G, V)
