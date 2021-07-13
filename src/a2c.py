@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch.distributions import Categorical
 
+
 class A2C(nn.Module):
 
     def __init__(self, env, t_max=1000, gamma=.99, random_seed=None):
@@ -90,6 +91,7 @@ class A2C(nn.Module):
         # Convert output arrays to tensors using torch.stack
         def f(inp):
             return torch.stack(tuple(inp), 0)
+
         return f(rewards), f(critic_vals), f(action_p_vals), total_reward
 
     def test_env_episode(self, render=True):
@@ -117,6 +119,7 @@ class A2C(nn.Module):
                 break
 
         return sum(rewards)
+
     def zero_grad(self, set_to_none: bool = False):
         """
         Wrapper method for nn.Module.zero_grad(),
