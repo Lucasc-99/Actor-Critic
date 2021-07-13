@@ -55,7 +55,7 @@ class A2C(nn.Module):
 
         for _ in range(self.t_max):
             if render:
-                self.env.render
+                self.env.render()
 
             observation = torch.from_numpy(observation).double()
 
