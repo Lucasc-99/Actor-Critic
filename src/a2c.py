@@ -4,7 +4,7 @@ from torch.distributions import Categorical
 
 class A2C(nn.Module):
 
-    def __init__(self, env, t_max=1000, gamma=.99):
+    def __init__(self, env, t_max=1000, gamma=.99, random_seed=None):
         """
         Assumes fixed continuous observation space
         and fixed discrete action space (for now)
@@ -13,6 +13,9 @@ class A2C(nn.Module):
         :param t_max: max time step for single episode
         """
         super(A2C, self).__init__()
+
+        if random_seed:
+            torch.manual_seed(random_seed)
 
         self.env = env
         self.t_max = t_max
@@ -36,7 +39,7 @@ class A2C(nn.Module):
             nn.Linear(8, 1)
         ).double()
 
-    def run_env_episode(self):
+    def train_env_episode(self, render=False):
         """
         Runs one episode and collects critic values, expected return,
         :return: A tensor with total/expected reward, critic eval, and action information
@@ -50,7 +53,9 @@ class A2C(nn.Module):
         observation = self.env.reset()
 
         for _ in range(self.t_max):
-            # self.env.render()
+            if render:
+                self.env.render
+
             observation = torch.from_numpy(observation).double()
 
             # Get action from actor
@@ -87,6 +92,31 @@ class A2C(nn.Module):
             return torch.stack(tuple(inp), 0)
         return f(rewards), f(critic_vals), f(action_p_vals), total_reward
 
+    def test_env_episode(self, render=True):
+        """
+        Run an episode of the environment in test mode
+        :param render: Toggle rendering of environment
+        :return: Total reward
+        """
+        observation = self.env.reset()
+        rewards = []
+        for _ in range(self.t_max):
+
+            if render:
+                self.env.render()
+
+            observation = torch.from_numpy(observation).double()
+
+            # Get action from actor
+            action_logits = torch.softmax(self.actor(observation), -1)
+            action = Categorical(action_logits).sample()
+
+            observation, reward, done, info = self.env.step(action.item())
+            rewards.append(reward)
+            if done:
+                break
+
+        return sum(rewards)
     def zero_grad(self, set_to_none: bool = False):
         """
         Wrapper method for nn.Module.zero_grad(),
