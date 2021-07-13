@@ -5,21 +5,22 @@ from torch.distributions import Categorical
 
 class A2C(nn.Module):
 
-    def __init__(self, env, t_max=1000, gamma=.99, random_seed=None):
+    def __init__(self, env, gamma=.99, random_seed=None):
         """
         Assumes fixed continuous observation space
         and fixed discrete action space (for now)
 
         :param env: target gym environment
-        :param t_max: max time step for single episode
+        :param gamma: the discount factor parameter for expected reward function :float
+        :param random_seed: random seed for experiment reproducibility :float, int, str
         """
-        super(A2C, self).__init__()
+        super().__init__()
 
         if random_seed:
+            env.seed(random_seed)
             torch.manual_seed(random_seed)
 
         self.env = env
-        self.t_max = t_max
         self.gamma = gamma
         self.in_size = len(env.observation_space.sample().flatten())
         self.out_size = self.env.action_space.n
@@ -47,39 +48,37 @@ class A2C(nn.Module):
         """
         rewards = []
         critic_vals = []
-        action_p_vals = []
+        action_lp_vals = []
 
         # Run episode and save information
 
         observation = self.env.reset()
-
-        for _ in range(self.t_max):
+        done = False
+        while not done:
             if render:
                 self.env.render()
 
             observation = torch.from_numpy(observation).double()
 
             # Get action from actor
-            action_logits = torch.softmax(self.actor(observation), -1)
-            action = Categorical(action_logits).sample()
+            action_logits = self.actor(observation)
+
+            action = Categorical(logits=action_logits).sample()
 
             # Get action probability
-            action_prob = action_logits[action]
+            action_log_prob = action_logits[action]
 
             # Get value from critic
             pred = torch.squeeze(self.critic(observation).view(-1))
 
             # Write prediction and action/probabilities to arrays
-            action_p_vals.append(action_prob)
+            action_lp_vals.append(action_log_prob)
             critic_vals.append(pred)
 
             # Send action to environment and get rewards, next state
 
             observation, reward, done, info = self.env.step(action.item())
             rewards.append(torch.tensor(reward).double())
-
-            if done:
-                break
 
         total_reward = sum(rewards)
 
@@ -92,17 +91,18 @@ class A2C(nn.Module):
         def f(inp):
             return torch.stack(tuple(inp), 0)
 
-        return f(rewards), f(critic_vals), f(action_p_vals), total_reward
+        return f(rewards), f(critic_vals), f(action_lp_vals), total_reward
 
     def test_env_episode(self, render=True):
         """
         Run an episode of the environment in test mode
-        :param render: Toggle rendering of environment
-        :return: Total reward
+        :param render: Toggle rendering of environment :bool
+        :return: Total reward :int
         """
         observation = self.env.reset()
         rewards = []
-        for _ in range(self.t_max):
+        done = False
+        while not done:
 
             if render:
                 self.env.render()
@@ -110,50 +110,25 @@ class A2C(nn.Module):
             observation = torch.from_numpy(observation).double()
 
             # Get action from actor
-            action_logits = torch.softmax(self.actor(observation), -1)
-            action = Categorical(action_logits).sample()
+            action_logits = self.actor(observation)
+            action = Categorical(logits=action_logits).sample()
 
             observation, reward, done, info = self.env.step(action.item())
             rewards.append(reward)
-            if done:
-                break
 
         return sum(rewards)
-
-    def zero_grad(self, set_to_none: bool = False):
-        """
-        Wrapper method for nn.Module.zero_grad(),
-        Zeroes the gradients of the actor and critic networks
-        :param set_to_none: set grads to none
-        :return: None
-        """
-        self.actor.zero_grad(set_to_none)
-        self.critic.zero_grad(set_to_none)
-
-    def get_actor_params(self):
-        """
-        Wrapper method for actor params
-        :return: Actor network parameters
-        """
-        return self.actor.parameters()
-
-    def get_critic_params(self):
-        """
-        Wrapper method for critic params
-        :return: Actor network parameters
-        """
-        return self.critic.parameters()
 
     @staticmethod
     def compute_loss(action_p_vals, G, V, loss=nn.SmoothL1Loss()):
         """
         Actor Advantage Loss, where advantage = G - V
         Critic Loss, using mean squared error
-        :param loss: loss function for critic
-        :param action_p_vals: Action Probabilities
-        :param G: Expected Returns
-        :param V: Predicted Values
-        :return: Actor loss tensor, Critic loss tensor
+        :param loss: loss function for critic   :Pytorch loss module
+        :param action_p_vals: Action Log Probabilities  :Tensor
+        :param G: Actual Expected Returns   :Tensor
+        :param V: Predicted Expected Returns    :Tensor
+        :return: Actor loss tensor, Critic loss tensor  :Tensor
         """
         assert len(action_p_vals) == len(G) == len(V)
-        return -(torch.sum(torch.log(action_p_vals) * (G - V))), loss(G, V)
+        advantage = G - V.detach()
+        return -(torch.sum(action_p_vals * advantage)), loss(G, V)
