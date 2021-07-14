@@ -79,7 +79,7 @@ class A2C(nn.Module):
 
         total_reward = sum(rewards)
 
-        # Convert reward array to expected return
+        # Convert reward array to expected return and standardize
         for t_i in range(len(rewards)):
 
             for t in range(t_i + 1, len(rewards)):
@@ -89,7 +89,11 @@ class A2C(nn.Module):
         def f(inp):
             return torch.stack(tuple(inp), 0)
 
-        return f(rewards), f(critic_vals), f(action_lp_vals), total_reward
+        # Standardize rewards
+        rewards = f(rewards)
+        rewards = (rewards - torch.mean(rewards)) / (torch.std(rewards) + .000000000001)
+
+        return rewards, f(critic_vals), f(action_lp_vals), total_reward
 
     def test_env_episode(self, render=True):
         """
