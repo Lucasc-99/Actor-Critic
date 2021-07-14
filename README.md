@@ -21,18 +21,13 @@ In order to be considered a solution, an agent must survive an average of 195+ t
 <!-- Results -->
 ## Results
 
-#Solved
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0.gif" width="500" height="400" />
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="500" height="400" />
+<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="300" height="200" />
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_2.gif" width="500" height="400" />
-
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_4.gif" width="500" height="400" />
 
 #Unsolved
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="500" height="400" />
+<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
 
 ## Built With
 
