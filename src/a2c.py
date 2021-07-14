@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+from IPython import display as ipythondisplay
+from PIL import Image
+from pyvirtualdisplay import Display
 from torch.distributions import Categorical
 
 
@@ -50,8 +53,10 @@ class A2C(nn.Module):
         # Run episode and save information
 
         observation = self.env.reset()
+
         done = False
         while not done:
+
             if render:
                 self.env.render()
 
@@ -103,11 +108,16 @@ class A2C(nn.Module):
         """
         observation = self.env.reset()
         rewards = []
+
+        if render:
+            # GIF collection code
+            screen = self.env.render(mode='rgb_array')
+            im = Image.fromarray(screen)
+            gif = [im]
+            # GIF collection code
+
         done = False
         while not done:
-
-            if render:
-                self.env.render()
 
             observation = torch.from_numpy(observation).double()
 
@@ -118,7 +128,15 @@ class A2C(nn.Module):
             observation, reward, done, info = self.env.step(action.item())
             rewards.append(reward)
 
-        return sum(rewards)
+            if render:
+                # GIF collection code
+                screen = self.env.render(mode='rgb_array')
+                gif.append(Image.fromarray(screen))
+                # GIF collection code
+
+
+
+        return sum(rewards), gif
 
     @staticmethod
     def compute_loss(action_p_vals, G, V, critic_loss=nn.SmoothL1Loss()):

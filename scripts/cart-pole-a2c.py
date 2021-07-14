@@ -8,7 +8,11 @@ a2c: Agent uses Advantage Actor Critic algorithm
 import gym
 from src.a2c import A2C
 import torch.optim as optim
-
+import numpy as np
+import matplotlib.pyplot as plt
+from IPython import display as ipythondisplay
+from PIL import Image
+from pyvirtualdisplay import Display
 
 LR = .01  # Learning rate
 SEED = None  # Random seed for reproducibility
@@ -55,9 +59,22 @@ for i in range(MAX_EPISODES):
             print(f"Solved CartPole-v0 with average reward {avg_r.item()}")
             break
 
+#
+# Print Training Graph with matplotlib
+#
+x = np.arange(1, len(r) + 1, 1)
+plt.plot(x, r, linewidth=.5, color='orange')
+plt.title(f'Cart-Pole: seed = {SEED}')
+plt.xlabel('Episode n')
+plt.ylabel('Reward at Episode n')
+plt.show()
 
 #
 # Test
 #
-for _ in range(100):
-    agent.test_env_episode(render=True)
+
+rew, gif = agent.test_env_episode(render=True)
+gif_file = 'solved-cartpole-v0.gif'
+# loop=0: loop forever, duration=1: play each frame for 1ms
+gif[0].save(
+    gif_file, save_all=True, append_images=gif[1:], loop=0, duration=1)
