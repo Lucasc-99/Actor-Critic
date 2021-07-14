@@ -29,20 +29,20 @@ Actor-Critic implementation, with a cartpole example script
    ```
    
 2. Install Pytorch and Gym
-```sh
+   ```sh
    pip3 install torch
    ```
    
- ```sh
+   ```sh
     pip3 install gym
- ```
+   ```
  
 3. Run scripts
-```sh
+   ```sh
    python3 -m src.cart-pole-baseline.py
-```
-```sh
+   ```
+   ```sh
    python3 -m src.cart-pole-a2c.py
-```
+   ```
 
 
