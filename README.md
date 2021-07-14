@@ -1,5 +1,5 @@
 
-<h3 align="center">Actor-Critic</h3>
+<h1 align="center">Actor-Critic</h1>
 
 <!-- ABOUT THE PROJECT -->
 ## Problem Background
@@ -14,6 +14,7 @@ TODO: Discuss the A2C method and its implementation in this repo
 * [Open AI Gym](https://gym.openai.com/)
 
 <!-- Results -->
+
 
 <!-- Usage -->
 
