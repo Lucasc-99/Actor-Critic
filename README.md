@@ -21,7 +21,7 @@ In order to be considered a solution, an agent must survive an average of 195+ t
 <!-- Results -->
 ## Results
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0.gif" width="200" height="200" />
+<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0.gif" width="500" height="400" />
 
 ## Built With
 
