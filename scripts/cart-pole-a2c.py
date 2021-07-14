@@ -12,7 +12,7 @@ import torch.optim as optim
 
 LR = .01  # Learning rate
 SEED = None  # Random seed for reproducibility
-MAX_EPISODES = 20000  # Max number of episodes
+MAX_EPISODES = 10000  # Max number of episodes
 
 # Init actor-critic agent
 agent = A2C(gym.make('CartPole-v0'), random_seed=SEED)
