@@ -22,21 +22,23 @@ In order to be considered a solution, an agent must survive an average of 195+ t
 ## Results
 
 Side-by-side comparison of random agent and trained A2C agent:
+
 <p float="left">  
     <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="300" height="200" />
-    </br>
     <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
 </p>
 
 
 Rewards at each episode for 3 seperate trials:
+
 <p float="left">
-    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="300" height="200" />
-    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="300" height="200" />
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="300" height="200" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="500" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="500" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="500" height="300" />
 </p>
 
 Training can be somewhat unstable, but will generally converge after about 1000 episodes
+
 
 ## Built With
 
