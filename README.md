@@ -14,11 +14,7 @@ Actor-Critic implementation, with a cartpole example script
 
 
 <!-- GETTING STARTED -->
-## Getting Started
-
-
-
-### Installation
+## Installation and usaage
 
 1. Clone the repo
    ```sh
