@@ -1,15 +1,16 @@
 
 <p align="center">
   <h1 align="center">Actor-Critic</h1>
-  <h3 align="center">The A2C Reinforcement Learning Method, in PyTorch</h3>
+  <h3 align="center">The A2C Reinforcement Learning Method</h3>
 </p>
 <br />
 
 
 
 <!-- ABOUT THE PROJECT -->
-## Problem Background
-TODO: add a small description of reinforcement learning and cartpole
+## Introduction
+This project is an implementation of the Advantage Actor-Critic Reinforcement Learning Method. 
+It aims to solve the Cart-Pole task provided by Open Ai Gym. Cart-Pole is a game in which the player (in this case, our model) attempts to balance a pole on a cart.
 
 ## Implementation Details
 TODO: Discuss the A2C method and its implementation in this repo
