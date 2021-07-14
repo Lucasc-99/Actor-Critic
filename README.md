@@ -17,6 +17,9 @@ In order to be considered a solution, an agent must survive an average of 195+ t
 
 ## Implementation Details
 
+Open AI Gym provides a variety of Reinforcement Learning Environments: https://gym.openai.com/envs/
+Their CartPole-v0 env was used for this project
+
 At each time step, the agent provides an action to the environment and the environment provides an observation and a reward. In the case of Cart-Pole the reward at each time step is 1, such that the total reward for each episode depends on how long the agent survives the game. An observation is an array consisting of the following: (cart position, cart velocity, pole angle, pole rotation rate).
 
 This implementation of A2C uses two neural networks:
