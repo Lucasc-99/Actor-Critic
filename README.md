@@ -37,9 +37,9 @@ This implementation of the A2C method uses two neural networks:
  
  ```
  self.critic = nn.Sequential(
-            nn.Linear(self.in_size, hidden_size),
+            nn.Linear(4, 128),
             nn.ReLU(),
-            nn.Linear(hidden_size, 1)
+            nn.Linear(128, 1)
         ).double()
  ```
  </br>
