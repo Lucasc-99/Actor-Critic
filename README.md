@@ -21,13 +21,28 @@ In order to be considered a solution, an agent must survive an average of 195+ t
 <!-- Results -->
 ## Results
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="300" height="200" />
+<div class="row">
+  <div class="column">
+    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="300" height="200" />
+  </div>
+  <div class="column">
+    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
+  </div>
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
+</div>
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="300" height="200" />
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="300" height="200" />
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="300" height="200" />
+<div class="row">
+  <div class="column">
+    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="300" height="200" />
+  </div>
+  <div class="column">
+    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="300" height="200" />
+  </div>
+  <div class="column">
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="300" height="200" />
+  </div>
+
+</div>
 
 ## Built With
 
