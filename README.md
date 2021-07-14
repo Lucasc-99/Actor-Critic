@@ -19,7 +19,7 @@ Cart-Pole is a game in which the player (in this case, our model) attempts to ba
 <!-- Results -->
 ## Results
 
-<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0.gif" width="40" height="40" />
+<img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0.gif" width="200" height="200" />
 
 ## Built With
 
