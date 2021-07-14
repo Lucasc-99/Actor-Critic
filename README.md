@@ -46,6 +46,7 @@ This implementation of A2C uses two neural networks:
         ).double()
  ```
  </br>
+ 
   Note: The above code creates the network architectures for Cart-Pole, however the actual module in src/a2c.py infers the input and output dimensions and thus can be used for any OpenAI Gym Env
 
 <!-- Results -->
