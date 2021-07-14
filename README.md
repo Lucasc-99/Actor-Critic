@@ -20,7 +20,9 @@ In order to be considered a solution, the agent must survive an average of 195+ 
 At each time step, the agent provides an action to the environment and the environment provides an observation and a reward. In the case of Cart-Pole the reward at each time step is 1, such that the total reward for each episode depends on how long the agent survives the game. An observation is an array consisting of the following: (cart position, cart velocity, pole angle, pole rotation rate).
 
 This implementation of the A2C method uses two neural networks
-  -Actor: takes in an observation as input and outputs action probabilities
+ </br>
+ -Actor: takes in an observation as input and outputs action probabilities
+ </br>
   -Critic: takes in an observation and outputs a value which estimates the expected return at the current state
 
 
