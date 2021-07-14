@@ -1,20 +1,23 @@
-Actor-Critic implementation, with a cartpole example script
 
-
+<h3 align="center">Actor-Critic</h3>
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## Problem Background
+TODO: add a small description of reinforcement learning and cartpole
 
+## Implementation Details
+TODO: Discuss the A2C method and its implementation in this repo
 
-### Built With
+## Built With
 
 * [Pytorch](https://pytorch.org/)
 * [Open AI Gym](https://gym.openai.com/)
 
+<!-- Results -->
 
+<!-- Usage -->
 
-<!-- GETTING STARTED -->
-## Installation and usaage
+## Installation and Running Scripts
 
 1. Clone the repo
    ```sh
@@ -40,5 +43,4 @@ Actor-Critic implementation, with a cartpole example script
    ```sh
    python3 -m src.cart-pole-a2c.py
    ```
-
 
