@@ -36,17 +36,12 @@ TODO: make nice looking graphs
 2. Install Pytorch and Gym
    ```sh
    pip3 install torch
-   ```
-   
-   ```sh
    pip3 install gym
    ```
  
 3. Run scripts
    ```sh
    python3 -m src.cart-pole-baseline.py
-   ```
-   ```sh
    python3 -m src.cart-pole-a2c.py
    ```
 
