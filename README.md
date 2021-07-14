@@ -19,7 +19,7 @@ In order to be considered a solution, an agent must survive an average of 195+ t
 
 At each time step, the agent provides an action to the environment and the environment provides an observation and a reward. In the case of Cart-Pole the reward at each time step is 1, such that the total reward for each episode depends on how long the agent survives the game. An observation is an array consisting of the following: (cart position, cart velocity, pole angle, pole rotation rate).
 
-This implementation of the A2C method uses two neural networks:
+This implementation of A2C uses two neural networks:
 
  </br>
  Actor: takes in an observation as input and outputs action probabilities
@@ -42,8 +42,7 @@ This implementation of the A2C method uses two neural networks:
         ).double()
  ```
  </br>
-  
-  The above code creates the network architectures for Cart-Pole, however the actual module in src/a2c.py infers the input and output dimensions and thus can be used for any OpenAI Gym Env
+  Note: The above code creates the network architectures for Cart-Pole, however the actual module in src/a2c.py infers the input and output dimensions and thus can be used for any OpenAI Gym Env
 
 <!-- Results -->
 ## Results
