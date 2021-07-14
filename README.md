@@ -32,7 +32,6 @@ This implementation of the A2C method uses two neural networks:
         ).double()
  ```
  </br>
- </br>
  Critic: takes in an observation and outputs a value which estimates the expected return at the current state
  
  ```
