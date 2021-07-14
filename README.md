@@ -1,5 +1,10 @@
 
-<h1 align="center">Actor-Critic</h1>
+<p align="center">
+  <h3 align="center">Actor-Critic</h3>
+</p>
+<br />
+
+
 
 <!-- ABOUT THE PROJECT -->
 ## Problem Background
