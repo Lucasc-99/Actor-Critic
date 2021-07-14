@@ -10,7 +10,7 @@ from src.a2c import A2C
 import torch.optim as optim
 
 
-LR = .001  # Learning rate
+LR = .01  # Learning rate
 SEED = None  # Random seed for reproducibility
 MAX_EPISODES = 20000  # Max number of episodes
 
