@@ -32,9 +32,9 @@ Side-by-side comparison of random agent and trained A2C agent:
 Rewards at each episode for 3 seperate trials:
 
 <p float="left">
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="500" height="300" />
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="500" height="300" />
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="500" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="400" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="400" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="400" height="300" />
 </p>
 
 Training can be somewhat unstable, but will generally converge before 1000 episodes
