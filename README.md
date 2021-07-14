@@ -19,6 +19,8 @@ Cart-Pole is a game in which the player (in this case, our model) attempts to ba
 <!-- Results -->
 ## Results
 
+<img src="https://github.com/Lucasc-99/Actor-Critic/tree/master/res/solved-cartpole-v0.gif" width="40" height="40" />
+
 ## Built With
 
 * [Pytorch](https://pytorch.org/)
