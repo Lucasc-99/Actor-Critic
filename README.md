@@ -37,7 +37,7 @@ Rewards at each episode for 3 seperate trials:
    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="500" height="300" />
 </p>
 
-Training can be somewhat unstable, but will generally converge after about 1000 episodes
+Training can be somewhat unstable, but will generally converge before 1000 episodes
 
 
 ## Built With
