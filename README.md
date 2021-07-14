@@ -1,6 +1,7 @@
 
 <p align="center">
-  <h3 align="center">Actor-Critic</h3>
+  <h1 align="center">Actor-Critic</h1>
+  <h3 align="center">The A2C Reinforcement Learning Method</h3>
 </p>
 <br />
 
