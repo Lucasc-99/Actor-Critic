@@ -12,16 +12,23 @@
 This project contains an implementation of the Advantage Actor-Critic Reinforcement Learning Method, and includes an example on Cart-Pole.
 Cart-Pole is a game in which the player (in this case, our agent) attempts to balance a pole on a cart. At each time step, the player can either accelerate the cart left or right uniformally. An episode of the game is lost if the pole falls + or - 15 degrees from vertical, and it is won if the player survives 200 time steps. 
 
-In order to be considered a solution, an agent must survive an average of 195+ time steps over 100 episodes.
+In order to be considered a solution, the agent must survive an average of 195+ time steps over 100+ episodes.
+
 
 ## Implementation Details
+
+At each time step, the agent provides an action to the environment and the environment provides an observation and a reward. In the case of Cart-Pole the reward at each time step is 1, such that the total reward for each episode depends on how long the agent survives the game. An observation is an array consisting of the following: (cart position, cart velocity, pole angle, pole rotation rate).
+
+This implementation of the A2C method uses two neural networks
+  -Actor: takes in an observation as input and outputs action probabilities
+  -Critic: takes in an observation and outputs a value which estimates the expected return at the current state
 
 
 
 <!-- Results -->
 ## Results
 
-Side-by-side comparison of random agent and trained A2C agent:
+Side-by-side comparison of random agent (takes random actions) and trained A2C agent:
 
 <p float="left">  
     <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
