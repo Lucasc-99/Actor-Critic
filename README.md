@@ -20,7 +20,8 @@ TODO: Discuss the A2C method and its implementation in this repo
 * [Open AI Gym](https://gym.openai.com/)
 
 <!-- Results -->
-
+## Results
+TODO: make nice looking graphs 
 
 <!-- Usage -->
 
@@ -40,7 +41,7 @@ TODO: Discuss the A2C method and its implementation in this repo
    ```
    
    ```sh
-    pip3 install gym
+   pip3 install gym
    ```
  
 3. Run scripts
