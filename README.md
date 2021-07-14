@@ -1,7 +1,7 @@
 
 <p align="center">
   <h1 align="center">Actor-Critic</h1>
-  <h3 align="center">The A2C Reinforcement Learning Method, in Pytorch</h3>
+  <h3 align="center">The A2C Reinforcement Learning Method, in PyTorch</h3>
 </p>
 <br />
 
