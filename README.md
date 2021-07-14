@@ -27,11 +27,9 @@ TODO: make nice looking graphs
 
 ## Installation and Running Scripts
 
-1. Clone the repo
+1. Clone the repo and change into directory
    ```sh
    git clone https://github.com/Lucasc-99/Actor-Critic.git
-   ```
-   ```sh
    cd Actor-Critic
    ```
    
