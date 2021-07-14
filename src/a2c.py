@@ -116,6 +116,7 @@ class A2C(nn.Module):
             gif = [im]
             # GIF collection code
 
+        count = 0
         done = False
         while not done:
 
@@ -128,13 +129,14 @@ class A2C(nn.Module):
             observation, reward, done, info = self.env.step(action.item())
             rewards.append(reward)
 
-            if render:
+            if render and count % 5 == 0:
                 # GIF collection code
                 screen = self.env.render(mode='rgb_array')
                 gif.append(Image.fromarray(screen))
                 # GIF collection code
-
-
+            if count < 200:
+                done = False
+            count += 1
 
         return sum(rewards), gif
 

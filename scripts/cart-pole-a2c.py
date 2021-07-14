@@ -25,12 +25,14 @@ agent = A2C(gym.make('CartPole-v0'), random_seed=SEED)
 actor_optim = optim.Adam(agent.actor.parameters(), lr=LR)
 critic_optim = optim.Adam(agent.critic.parameters(), lr=LR)
 
+
 #
 # Train
 #
 
 r = []  # Array containing total rewards
 avg_r = 0  # Value storing average reward over last 100 episodes
+
 
 for i in range(MAX_EPISODES):
     critic_optim.zero_grad()
@@ -64,13 +66,13 @@ for i in range(MAX_EPISODES):
 #
 x = np.arange(1, len(r) + 1, 1)
 plt.plot(x, r, linewidth=.5, color='orange')
-plt.title(f'Cart-Pole: seed = {SEED}')
+plt.title(f'Cart-Pole: Training Episode vs. Reward')
 plt.xlabel('Episode n')
 plt.ylabel('Reward at Episode n')
 plt.show()
 
 #
-# Test
+# Test after training
 #
 
 rew, gif = agent.test_env_episode(render=True)
