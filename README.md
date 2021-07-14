@@ -9,8 +9,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## Introduction
-This project is an implementation of the Advantage Actor-Critic Reinforcement Learning Method. 
-It aims to solve the Cart-Pole task provided by Open Ai Gym. Cart-Pole is a game in which the player (in this case, our model) attempts to balance a pole on a cart.
+This project contains an implementation of the Advantage Actor-Critic Reinforcement Learning Method, and includes an example of it being used to solve Cart-Pole.
+Cart-Pole is a game in which the player (in this case, our model) attempts to balance a pole on a cart.
 
 ## Implementation Details
 TODO: Discuss the A2C method and its implementation in this repo
