@@ -39,11 +39,18 @@ for i in range(MAX_EPISODES):
 
     r.append(total_reward)
 
-    print(total_reward)
-
     # Check if we won the game
     if total_reward >= 200:
+        print("solved")
         break
+
+    # Check average reward every 100 episodes
+    if len(r) >= 100:
+        episode_count = i - (i % 100)
+        prev_episodes = r[len(r) - 100:]
+        avg_r = sum(prev_episodes) / len(prev_episodes)
+        if len(r) % 100 == 0:
+            print(f'Average reward during episodes {episode_count}-{episode_count + 100} is {avg_r.item()}')
 
     l_actor, l_critic = agent.compute_loss(action_p_vals=action_lp_vals, G=rewards, V=critic_vals)
 
