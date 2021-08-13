@@ -84,19 +84,19 @@ Training can be somewhat unstable, but will usually converge well before 2000 ep
 
 1. Clone the repo and change into directory
    ```sh
-   git clone https://github.com/Lucasc-99/Actor-Critic.git
-   cd Actor-Critic
+   $ git clone https://github.com/Lucasc-99/Actor-Critic.git
+   $ cd Actor-Critic
    ```
    
 2. Install Pytorch and Gym
    ```sh
-   pip3 install torch
-   pip3 install gym
+   $ pip3 install torch
+   $ pip3 install gym
    ```
  
 3. Run scripts
    ```sh
-   python3 -m src.cart-pole-baseline.py
-   python3 -m src.cart-pole-a2c.py
+   $ python3 -m src.cart-pole-baseline.py
+   $ python3 -m src.cart-pole-a2c.py
    ```
 
