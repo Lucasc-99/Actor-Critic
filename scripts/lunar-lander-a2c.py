@@ -7,15 +7,16 @@ a2c: Agent uses Advantage Actor Critic algorithm
 """
 import gym
 from src.a2c import A2C
+import torch.nn as nn
 import torch.optim as optim
 import math
 
-LR = .01  # Learning rate
+LR = .001  # Learning rate
 SEED = None  # Random seed for reproducibility
 MAX_EPISODES = 10000  # Max number of episodes
 
 # Init actor-critic agent
-agent = A2C(gym.make('LunarLander-v2'), random_seed=SEED, gamma=.9999, hidden_size=100)
+agent = A2C(gym.make('LunarLander-v2'), random_seed=SEED, gamma=.999)
 
 
 # Init optimizers
