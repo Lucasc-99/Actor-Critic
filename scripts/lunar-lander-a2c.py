@@ -4,8 +4,6 @@ Agent learns to land spacecraft
 
 a2c: Agent uses Advantage Actor Critic algorithm
 
-Terrible performance at the moment
-
 """
 import gym
 from src.a2c import A2C
@@ -17,7 +15,8 @@ SEED = None  # Random seed for reproducibility
 MAX_EPISODES = 10000  # Max number of episodes
 
 # Init actor-critic agent
-agent = A2C(gym.make('LunarLander-v2'), random_seed=SEED)
+agent = A2C(gym.make('LunarLander-v2'), random_seed=SEED, gamma=.9999, hidden_size=100)
+
 
 # Init optimizers
 actor_optim = optim.Adam(agent.actor.parameters(), lr=LR)
