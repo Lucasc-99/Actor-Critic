@@ -7,7 +7,6 @@ a2c: Agent uses Advantage Actor Critic algorithm
 """
 import gym
 from src.a2c import A2C
-import torch.nn as nn
 import torch.optim as optim
 import math
 
