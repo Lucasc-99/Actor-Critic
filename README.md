@@ -10,10 +10,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Introduction
 This project contains an implementation of the Advantage Actor-Critic Reinforcement Learning Method, and includes an example on Cart-Pole.
-Cart-Pole is a game in which the player (in this case, our agent) attempts to balance a pole on a cart. At each time step, the player can either accelerate the cart left or right uniformally. An episode of the game is lost if the pole falls + or - 15 degrees from vertical, and it is won if the player survives 200 time steps. 
-
-In order to be considered a solution, an agent must survive an average of 195+ time steps over 100+ episodes.
-
+Cart-Pole is a game in which the player (in this case, our agent) attempts to balance a pole on a cart. At each time step, the player can either accelerate the cart left or right uniformally. An episode of the game is lost if the pole falls + or - 15 degrees from vertical, and it is won if the player survives 200 time steps. In order to be considered a solution, an agent must survive an average of 195+ time steps over 100+ episodes.
 
 <!-- Results -->
 ## Results
