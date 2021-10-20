@@ -15,6 +15,29 @@ Cart-Pole is a game in which the player (in this case, our agent) attempts to ba
 In order to be considered a solution, an agent must survive an average of 195+ time steps over 100+ episodes.
 
 
+<!-- Results -->
+## Results
+
+Side-by-side comparison of random agent (takes random actions) and trained A2C agent:
+
+<p float="left">  
+    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
+    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="300" height="200" />
+</p>
+
+
+Rewards at each episode for 4 seperate trials:
+
+<p float="left">
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="400" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="400" height="300" />
+   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="400" height="300" />
+  <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_5.png" width="400" height="300" />
+</p>
+
+Training can be somewhat unstable, but will usually converge well before 2000 episodes
+
+
 ## Implementation Details
 
 Open AI Gym provides a variety of Reinforcement Learning Environments: https://gym.openai.com/envs/
@@ -48,29 +71,6 @@ This implementation of A2C uses two neural networks:
  </br>
  
   Note: The above code creates network architectures for Cart-Pole, however the actual module in src/a2c.py infers the input and output dimensions and thus can be used for any OpenAI Gym Env
-
-<!-- Results -->
-## Results
-
-Side-by-side comparison of random agent (takes random actions) and trained A2C agent:
-
-<p float="left">  
-    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/unsolved-cartpole-v0_2.gif" width="300" height="200" />
-    <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/solved-cartpole-v0_1.gif" width="300" height="200" />
-</p>
-
-
-Rewards at each episode for 4 seperate trials:
-
-<p float="left">
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_1.png" width="400" height="300" />
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_2.png" width="400" height="300" />
-   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_3.png" width="400" height="300" />
-  <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_5.png" width="400" height="300" />
-</p>
-
-Training can be somewhat unstable, but will usually converge well before 2000 episodes
-
 
 ## Built With
 
