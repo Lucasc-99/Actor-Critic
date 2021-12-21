@@ -32,7 +32,7 @@ Rewards at each episode for 4 seperate trials:
   <img src="https://github.com/Lucasc-99/Actor-Critic/blob/master/res/cartpoledata_5.png" width="400" height="300" />
 </p>
 
-Training can be somewhat unstable, but will usually converge well before 2000 episodes
+Training can be quite unstable, even with extensive hyperparameter tuning
 
 
 ## Implementation Details
