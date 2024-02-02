@@ -81,9 +81,10 @@ class A2C(nn.Module):
 
         # Convert reward array to expected return and standardize
         for t_i in range(len(rewards)):
-
-            for t in range(t_i + 1, len(rewards)):
-                rewards[t_i] += rewards[t] * (self.gamma ** (t_i - t))
+            G = 0
+            for t in range(t_i, len(rewards)):
+                G += rewards[t] * (self.gamma ** (t - t_i))
+            rewards[t_i] = G
 
         # Convert output arrays to tensors using torch.stack
         def f(inp):
